@@ -34,5 +34,5 @@ if you want to calibrate your camera, you first need to estimate the camera matr
 reference). for a quick estimator of the distortion coefficient (k1) we implemented a nice algorithm, 
 check it out https://github.com/potpov/camera-correction
 
-
+![alt text](https://i.ibb.co/zFJxDQx/example.png)
 

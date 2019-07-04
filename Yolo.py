@@ -1,9 +1,16 @@
-import torch
 import conf
 from content.darknet import *
 
+
 class Yolo:
+    """
+    interface for the YOLO darknet model
+    """
     def __init__(self, device="cuda"):
+        """
+        create a model instance using Darknet and set it to evaluation mode
+        :param device: whatever using GPU or CPU (automatically detected)
+        """
         self.model = Darknet(conf.YOLO_CONF_PATH)
         self.model.load_weights(conf.YOLO_WEIGHT_PATH)
         self.model.net_info["height"] = conf.RESOLUTION
@@ -17,6 +24,12 @@ class Yolo:
         self.model.eval()
 
     def predict(self, frame):
+        """
+        perform a prediction
+        :param frame: input image
+        :return: list of predictions (coordinated of up-left and down-right corner
+        of the bounding box
+        """
         net_input = prep_image(frame, int(self.model.net_info["height"]))
         im_dim = frame.shape[1], frame.shape[0]
         im_dim = torch.FloatTensor(im_dim).repeat(1, 2)
@@ -50,5 +63,4 @@ class Yolo:
         for i in range(output.shape[0]):
             output[i, [1, 3]] = torch.clamp(output[i, [1, 3]], 0.0, im_dim[i, 0])
             output[i, [2, 4]] = torch.clamp(output[i, [2, 4]], 0.0, im_dim[i, 1])
-
         return output
