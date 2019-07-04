@@ -99,7 +99,7 @@ def create_module(blocks):
       # If the layer is Upsampling
     elif (x["type"] == "upsample"):
         stride = int(x["stride"])
-        upsample = nn.Upsample(scale_factor = 2, mode = 'bilinear')
+        upsample = nn.Upsample(scale_factor = 2, mode = 'bilinear', align_corners=False)
         module.add_module("Upsample_{}".format(index), upsample)
     
       # If it is a route layer

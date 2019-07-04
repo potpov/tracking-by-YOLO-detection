@@ -9,6 +9,14 @@ import numpy as np
 import random
 
 
+def progress_bar(current_value, total):
+    increments = 50
+    percentual = int((current_value/ total) * 100)
+    i = int(percentual // (100 / increments ))
+    text = "\r[{0: <{1}}] {2}%".format('=' * i, increments, percentual)
+    print(text, end="\n" if percentual == 100 else "")
+
+
 # loading available classes (only person will be used)
 fp = open(conf.CLASS_NAME_PATH, 'r')
 classes = fp.read().split("\n")[:-1]  # discard the last
@@ -25,8 +33,11 @@ print("Network successfully loaded")
 
 cap = cv2.VideoCapture(conf.VIDEO_PATH)
 assert cap.isOpened(), 'Cannot capture source, bad video path?'
+video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+loading = 0  # for the status bar
 
 distortion = Preprocessing.Distortion()
+
 prospective = Preprocessing.Prospective()
 trajectory = Trajectory.Trajectory()
 
@@ -39,9 +50,12 @@ buckets_cords_orig = []
 if conf.SAVE_RESULT:
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     vout = cv2.VideoWriter(conf.VIDEO_OUT_PATH, fourcc, 20.0, (640, 480))
-    vout1 = cv2.VideoWriter(conf.VIDEO_OUT_PATH, fourcc, 20.0, (640, 480))
+    vout1 = cv2.VideoWriter(conf.VIDEO_UP_OUT_PATH, fourcc, 20.0, (640, 480))
 
+print("analyzing video...")
 while cap.isOpened():
+    loading = loading + 1  # status bar progressing
+    progress_bar(loading, video_length)
     ret, frame = cap.read()
 
     if ret:
@@ -178,9 +192,6 @@ while cap.isOpened():
                         ind = tuple(ind)
 
                     # append person coords to bucktes
-                    print("-----")
-                    print(buckets_cords)
-                    print(ind)
                     buckets_cords[ind[1]].append(new_coords[ind[0]])
                     buckets_cords_orig[ind[1]].append(new_coords_orig[ind[0]])
                     # setting score out of image view

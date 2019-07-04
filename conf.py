@@ -1,7 +1,5 @@
 import numpy as np
 
-
-
 ########
 # YOLO
 
@@ -56,10 +54,11 @@ MIN_TRACKING_TH = 100  # minimum distance to be taken into account for a bucket
 
 PALETTE_PATH = './content/pallete'
 VIDEO_OUT_PATH = './results/result.avi'
+VIDEO_UP_OUT_PATH = './results/result_upside.avi'
 
 #######
 # DEBUG
 
-TESTING = True
+TESTING = False
 SAVE_RESULT = True
-LIVE_RESULTS = False
+LIVE_RESULTS = False  # show real-time results in a couple of windows
