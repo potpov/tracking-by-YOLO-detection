@@ -1,0 +1,8 @@
+
+venv/
+
+content/yolov3\.weights
+
+\.idea/
+
+__pycache__/
