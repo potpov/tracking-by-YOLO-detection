@@ -6,7 +6,7 @@ where each bucket contains the history of each person tracked during the previou
 a score is evaluated by considering the distance from the last coord of the 
 bucket and the next coord expected from that bucket according to its trajectory in time.
 
-full idea can be found here: https://drive.google.com/open?id=1-rgVQ-BCiR36AihvhXitWucVMZGyXPeO
+full idea can be found here: https://drive.google.com/open?id=1cwVWWydWiCwkSIiFqZewdeJUecBgM4L9
 
 # installation
 
